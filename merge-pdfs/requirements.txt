@@ -1,0 +1,3 @@
+pypdf>=6.0
+# Only needed for "secured" (AES-encrypted) PDFs; without it those files are skipped with a note.
+cryptography
