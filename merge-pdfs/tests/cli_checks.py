@@ -79,7 +79,7 @@ check("FOLDER with stray PowerShell quote", code == 0 and layout(b / "merged.pdf
 
 (work / "empty").mkdir()
 code, out, err = run(work / "empty")
-check("empty folder -> exit 1", code == 1 and "No PDFs found" in err, (code, err))
+check("empty folder -> exit 1", code == 1 and "No PDFs or Word documents found" in err, (code, err))
 code, out, err = run(work / "nope")
 check("missing folder -> exit 1", code == 1 and "Not a folder" in err, (code, err))
 
@@ -94,7 +94,7 @@ bad = work / "bad"
 bad.mkdir()
 (bad / "broken.pdf").write_bytes(b"junk")
 code, out, err = run(bad)
-check("only unreadable PDFs -> exit 1, nothing written", code == 1 and "No readable PDFs" in err and not (bad / "merged.pdf").exists(), (code, err))
+check("only unreadable PDFs -> exit 1, nothing written", code == 1 and "No readable files" in err and not (bad / "merged.pdf").exists(), (code, err))
 
 # Hold the output open with no sharing, the way a PDF viewer can.
 k32 = ctypes.windll.kernel32
@@ -109,7 +109,7 @@ check("locked output -> exit 1 + friendly message", code == 1 and "is it open in
 check("locked output left intact, no partial file", sha(a / "merged.pdf") == before and not list(a.glob("~*.part")), list(a.iterdir()))
 
 code, out, err = run("-h")
-check("-h mentions the window", code == 0 and "no arguments" in out, out)
+check("-h mentions the window", code == 0 and "no arguments" in " ".join(out.split()), out)
 
 print(f"\n{'ALL CLI TESTS PASSED' if not fails else f'{len(fails)} CLI FAILURE(S): {fails}'}")
 sys.exit(1 if fails else 0)

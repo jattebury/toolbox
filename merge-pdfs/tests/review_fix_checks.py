@@ -79,7 +79,7 @@ def damaged_case(kind):
 for kind in ("A-bad-stream", "B-null-annot", "C-dangling-annot", "D-truncated"):
     d = damaged_case(kind)
     out = d.parent / f"{kind}.pdf"
-    merged, skipped = m.merge(m.list_pdfs(d), out)
+    merged, skipped = m.merge(m.list_documents(d), out)
     got = widths(out)
     check(f"damaged {kind}: skipped file contributes no pages", got == [101, 103, 103]
           and [p.name for p, _ in skipped] == ["2. Check Detail.pdf"]

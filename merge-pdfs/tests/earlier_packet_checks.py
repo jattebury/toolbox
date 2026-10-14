@@ -38,7 +38,7 @@ d = work / "Board Packet"
 for name, w_, n in [("1. Agenda.pdf", 101, 1), ("2. Minutes.pdf", 102, 3), ("3. Treasurer.pdf", 103, 2)]:
     make(d / name, w_, n)
 # An earlier packet saved inside the folder under a name the filename rule wouldn't catch.
-m.merge(m.list_pdfs(d), work / "tmp.pdf")
+m.merge(m.list_documents(d), work / "tmp.pdf")
 shutil.move(work / "tmp.pdf", d / "September 2026 Packet.pdf")
 # A PDF whose bookmarks name only one other file is an ordinary input.
 w = PdfWriter()
@@ -46,7 +46,7 @@ w.add_blank_page(width=104, height=200)
 w.add_outline_item("1. Agenda", 0)
 w.write(d / "4. Notes.pdf")
 
-pdfs = m.list_pdfs(d)
+pdfs = m.list_documents(d)
 check("packet recognised by its bookmarks", m.looks_combined(d / "September 2026 Packet.pdf", pdfs))
 check("one matching bookmark isn't enough", not m.looks_combined(d / "4. Notes.pdf", pdfs))
 check("ordinary inputs aren't flagged", not any(m.looks_combined(p, pdfs) for p in pdfs if p.name[0].isdigit()))

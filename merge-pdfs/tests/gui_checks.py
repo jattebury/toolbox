@@ -239,7 +239,7 @@ check("all-unreadable folder disables Combine", str(app.combine_button["state"])
 empty = work / "empty"
 empty.mkdir()
 app.load_folder(empty); settle()
-check("empty folder status", app.status["text"] == "No PDFs listed." and str(app.combine_button["state"]) == "disabled",
+check("empty folder status", app.status["text"] == "No files listed." and str(app.combine_button["state"]) == "disabled",
       app.status["text"])
 
 # Unexpected errors surface as a dialog instead of vanishing
