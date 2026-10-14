@@ -1,3 +1,5 @@
 pypdf>=6.0
 # Only needed for "secured" (AES-encrypted) PDFs; without it those files are skipped with a note.
 cryptography
+# Only needed for Word documents (.doc/.docx), which are converted by Microsoft Word.
+pywin32; sys_platform == "win32"

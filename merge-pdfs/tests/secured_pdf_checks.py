@@ -52,7 +52,7 @@ def check(name, ok, detail=""):
 
 AES = {"2. Bank Statement.pdf", "3. Audit Letter.pdf"}
 out = work / f"merged_{expect}.pdf"
-merged, skipped = m.merge(m.list_pdfs(d), out)
+merged, skipped = m.merge(m.list_documents(d), out)
 got = [int(p.mediabox.width) for p in PdfReader(out).pages]
 if expect == "missing":
     check("AES files skipped with the install hint", {p.name for p, _ in skipped} == AES

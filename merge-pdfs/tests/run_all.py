@@ -4,7 +4,8 @@
 
 The window checks open and close real windows, so run this on a desktop session
 and leave the mouse alone for a minute. The secured-PDF suite runs in "present"
-or "missing" mode depending on whether the cryptography package is installed.
+or "missing" mode depending on whether the cryptography package is installed, and
+the Word suite is skipped unless Microsoft Word and pywin32 are both available.
 """
 import importlib.util
 import subprocess
@@ -27,6 +28,8 @@ with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
         (f"secured PDFs (cryptography {crypto})", "secured_pdf_checks.py",
          ["check", SCRIPT, HERE / "fixtures" / "secured", work / "secured", crypto]),
         ("launcher", "launcher_checks.py", [LAUNCHER, work / "launcher"]),
+        ("converting other file types (fake converter)", "conversion_checks.py", [SCRIPT, work / "conversion"]),
+        ("Word documents (real Microsoft Word; skipped without it)", "word_checks.py", [SCRIPT, work / "word"]),
     ]
     failed = []
     for name, suite, args in suites:
